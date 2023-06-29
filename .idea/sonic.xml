@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MyProjectSettings">
+    <option name="map">
+      <map>
+        <entry key="sonic">
+          <value>
+            <list>
+              <LocalServiceSelfTest />
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

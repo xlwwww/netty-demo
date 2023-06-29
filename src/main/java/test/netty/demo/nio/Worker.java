@@ -1,13 +1,12 @@
-package test.netty.demo;
+package test.netty.demo.nio;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
+import java.nio.charset.Charset;
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Worker implements Runnable {
     private Thread thread;
@@ -16,8 +15,6 @@ public class Worker implements Runnable {
 
     private String name;
     private volatile boolean start = false;
-    // 在两个线程之间传递数据
-    private ConcurrentLinkedQueue<Runnable> queue = new ConcurrentLinkedQueue<>();
 
     public Worker(String name) {
         this.name = name;
@@ -30,15 +27,9 @@ public class Worker implements Runnable {
             start = true;
             thread.start();
         }
-        // 向队列添加任务，任务没有立刻执行
-        queue.add(() -> {
-            try {
-                sc.register(selector, SelectionKey.OP_READ + SelectionKey.OP_WRITE, null);
-            } catch (ClosedChannelException e) {
-                e.printStackTrace();
-            }
-        });
+        // wakeup ：先wakeup后select，select不会阻塞
         selector.wakeup();
+        sc.register(selector, SelectionKey.OP_READ, null);
     }
 
     @Override
@@ -47,10 +38,7 @@ public class Worker implements Runnable {
         while (true) {
             try {
                 selector.select();
-                Runnable poll = queue.poll();
-                if (poll != null) {
-                    poll.run(); ///执行 sc.register(selector, SelectionKey.OP_READ + SelectionKey.OP_WRITE, null);
-                }
+                System.out.println(this.name + "begin read.. ");
                 Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
                 while (iterator.hasNext()) {
                     SelectionKey selectionKey = iterator.next();
@@ -59,6 +47,9 @@ public class Worker implements Runnable {
                         ByteBuffer byteBuffer = ByteBuffer.allocate(16);
                         SocketChannel channel = (SocketChannel) selectionKey.channel();
                         channel.read(byteBuffer);
+                        byteBuffer.flip();
+                        final String string = Charset.defaultCharset().decode(byteBuffer).toString();
+                        System.out.println(this.name + "读取内容： " + string);
                     } else if (selectionKey.isWritable()) {
 
                     }

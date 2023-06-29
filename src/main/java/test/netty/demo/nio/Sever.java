@@ -1,4 +1,6 @@
-package test.netty.demo;
+package test.netty.demo.nio;
+
+import test.netty.demo.utils.ByteBufferUtil;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -8,8 +10,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Test {
+public class Sever {
     public static void main(String[] args) throws IOException {
+        //测试黏包、半包的拆包
         //test1();
         testSelector();
     }
@@ -84,9 +87,6 @@ public class Test {
             e.printStackTrace();
         }
     }
-
-    // 黏包、半包
-    // 黏包： 提升传输效率
     public static void test1() {
         ByteBuffer source = ByteBuffer.allocate(32);
         source.put("hello,world\nzhangsan\nho".getBytes(StandardCharsets.UTF_8));

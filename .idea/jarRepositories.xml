@@ -7,6 +7,11 @@
       <option name="url" value="http://pixel.sankuai.com/repository/mtdp" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="meituan-offline-releases" />
+      <option name="name" value="Mei Tuan internal repository for released artifacts" />
+      <option name="url" value="http://maven.offline.sankuai.com/nexus/content/groups/public" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="meituan-dianping-releases" />
       <option name="name" value="Repository for releases artifacts" />
       <option name="url" value="http://pixel.sankuai.com/repository/mtdp" />
@@ -15,6 +20,11 @@
       <option name="id" value="meituan-dianping-snapshots" />
       <option name="name" value="Repository for snapshots artifacts" />
       <option name="url" value="http://pixel.sankuai.com/repository/mtdp" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="http://maven.offline.sankuai.com/nexus/content/groups/public" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
@@ -30,6 +40,11 @@
       <option name="id" value="aliyun-releases" />
       <option name="name" value="ali" />
       <option name="url" value="http://pixel.sankuai.com/repository/mtdp" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="meituan-offline-snapshots" />
+      <option name="name" value="Mei Tuan internal repository for snapshots artifacts" />
+      <option name="url" value="http://maven.offline.sankuai.com/nexus/content/groups/public-snapshots" />
     </remote-repository>
   </component>
 </project>
